@@ -25,5 +25,8 @@ require __DIR__ . '/../src/middleware.php';
 // Register routes
 require __DIR__ . '/../src/routes.php';
 
+// Default timezone
+date_default_timezone_set('America/Toronto');
+
 // Run app
 $app->run();
