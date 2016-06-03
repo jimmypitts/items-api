@@ -1,18 +1,59 @@
-# Slim Framework 3 Skeleton Application
+# Items Api
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 3 application. This application uses the latest Slim 3 with the PHP-View template renderer. It also uses the Monolog logger.
-
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+This is an api to be consumed by web and mobile applications.
 
 ## Install the Application
 
-Run this command from the directory in which you want to install your new Slim Framework application.
+To install this application you must use composer to manage dependencies.  Once composer is install, you will be left with a composer.phar file.
 
-    php composer.phar create-project slim/slim-skeleton [my-app-name]
+Clone this repository locally.  From inside the application directory, run:
 
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
+    php /path/to/composer.phar update
 
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writeable.
+Replace `/path/to/composer.phar` with the path to your composer.phar file.  After running the command, all dependencies will be resolved.
 
-That's it! Now go build something cool.
+Open `/lib/mysql.php` and enter your appropriate mysql database credentials.
+
+You will have to configure your webserver to point traffic to the correct directory.  I have used apache and my configuration is as follows:
+`
+	<Directory /Users/jimmypitts/dev>
+	    AllowOverride FileInfo Options
+	</Directory>
+
+	<VirtualHost *:80>
+	    ServerName jimmy.dev
+	    ServerAlias www.jimmy.dev
+	    DocumentRoot "/Users/jimmypitts/dev/varage-api/public"
+	    ErrorLog "/private/var/log/apache2/jimmy.dev-error_log"
+	    CustomLog "/private/var/log/apache2/jimmy.dev-access_log" common
+	</VirtualHost>
+`
+
+## Testing
+
+Two .sql scripts exist that will need to be run.  First, run `/database/mysql/schema/item.sql`, followed by `/database/mysql/scripts/data.sql`.  The test cases depend on the state of the database.
+
+## Usage ##
+
+There are two endpoints for the api.  One returns a single item, and the other returns an array of items.
+
+An item has the structure:
+
+`{
+	id: int
+	title: string
+	description: string
+	category: string
+	price: float
+	name: string
+	latitude: float
+	longitude: float
+	status: string
+	create_date: int
+}`
+
+/api/item/:id - this will return the above structure for the item with the given id.  If the item does not exist, a http 404 status code is returned.
+
+/api/items - this will return an array of all available item.  Additionally there is an ability to filter this list based on the item category and the seller.  These are passed in as query parameters with the keys `seller` and `category`.  For example, `/api/items?category=Sports` would return all the items belonging to the sports category.
+
+
