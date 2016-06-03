@@ -39,7 +39,7 @@ There are two endpoints for the api.  One returns a single item, and the other r
 
 An item has the structure:
 
-`{
+```{
 	id: int
 	title: string
 	description: string
@@ -50,7 +50,7 @@ An item has the structure:
 	longitude: float
 	status: string
 	create_date: int
-}`
+}```
 
 /api/item/:id - this will return the above structure for the item with the given id.  If the item does not exist, a http 404 status code is returned.
 
