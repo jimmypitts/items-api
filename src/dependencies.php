@@ -1,7 +1,7 @@
 <?php
 // DIC configuration
 
-$container = $app->getContainer();
+$container = $this->getContainer();
 
 // view renderer
 $container['renderer'] = function ($c) {
